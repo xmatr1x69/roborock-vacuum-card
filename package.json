@@ -1,5 +1,5 @@
 {
-  "name": "roborock",
+  "name": "roborock-vacuum-card",
   "version": "1.0.4",
   "description": "",
   "main": "dist/roborock-vacuum-card.js",
@@ -7,7 +7,7 @@
     "start": "rollup -c --watch",
     "build": "rollup -c"
   },
-  "author": "",
+  "author": "strange_v",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
