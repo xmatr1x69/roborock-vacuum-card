@@ -1,5 +1,4 @@
 {
     "name": "Roborock Vacuum Card",
-    "render_readme": true,
-    "filename": "roborock-vacuum-card.js"
+    "render_readme": true
 }
