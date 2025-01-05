@@ -106,11 +106,8 @@ export interface RoborockVacuumCardConfig {
 }
 
 export interface RoborockSensorIds {
-  reachStatus: string;
   cleaning: string;
   mopDrying: string;
   mopDryingRemainingTime: string;
   battery: string;
-  vacuumError: string;
-  docError: string;
 }

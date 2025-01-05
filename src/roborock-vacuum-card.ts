@@ -50,13 +50,10 @@ export class RoborockVacuumCard extends LitElement {
   get sensor(): RoborockSensorIds {
     const name = this.name;
     return {
-      reachStatus: `sensor.${name}_status`,
       cleaning: `binary_sensor.${name}_cleaning`,
       mopDrying: `binary_sensor.${name}_mop_drying`,
       mopDryingRemainingTime: `sensor.${name}_mop_drying_remaining_time`,
       battery: `sensor.${name}_battery`,
-      vacuumError: `sensor.${name}_vacuum_error`,
-      docError: `sensor.${name}_dock_error`,
     };
   }
 
@@ -105,15 +102,12 @@ export class RoborockVacuumCard extends LitElement {
 
     const isCleaning = this.state(this.sensor.cleaning) == 'on';
     const state = this.state(this.config.entity);
-    const reachState = this.state(this.sensor.reachStatus);
+    const combinedState = this.renderState(state);
     const errors = this.renderErrors();
     const name = this.renderName();
     const mode = this.renderMode();
     const mopDrying = this.renderMopDrying();
     const battery = this.renderBattery();
-    const combinedState = state == reachState
-      ? localize(`status.${state}`)
-      : localize(`status.${state}`) + '. ' + localize(`reach_status.${reachState}`) + '.';
     const stats = this.renderStats(isCleaning ? 'cleaning' : state);
     const actions = this.renderActions(isCleaning, state);
 
@@ -142,6 +136,17 @@ export class RoborockVacuumCard extends LitElement {
     `;
   }
 
+  private renderState(state: string | undefined) {
+    const reachStatusSensor = this._getExistingSensorId([`sensor.${this.name}_status`]);
+    if (!reachStatusSensor)
+      return localize(`status.${state}`);
+
+    const reachState = this.state(reachStatusSensor);
+    return state == reachState
+      ? localize(`status.${state}`)
+      : localize(`status.${state}`) + '. ' + localize(`reach_status.${reachState}`) + '.';
+  }
+
   private renderPopup(): Template {
     if (!this.hass || !this.config || !this.config.areas || !this.popupActive)
       return nothing;
@@ -157,28 +162,32 @@ export class RoborockVacuumCard extends LitElement {
     if (!this.hass || !this.config)
       return nothing;
 
-    const rawVacuumError = this.hass.states[this.sensor.vacuumError].state,
-      rawDocError = this.hass.states[this.sensor.docError].state,
-      vacuumError = `vacuum_error.${rawVacuumError}`,
-      docError = `doc_error.${rawDocError}`,
-      isVacuumError = rawVacuumError != "none",
-      isdocError = rawDocError != 'ok';
+    const vacuumErrorSensor = this._getExistingSensorId([`sensor.${this.name}_vacuum_error`, `sensor.${this.name}_current_error`]),
+      docErrorSensor = this._getExistingSensorId([`sensor.${this.name}_dock_error`]);
 
+    let isVacuumError = false;
     let vacuum: Template = nothing;
-    if (isVacuumError) {
-      vacuum = html`
-        ${localize('common.vacuum_error')}: ${localize(vacuumError)}.<br/>
-      `;
+    if (vacuumErrorSensor) {
+      const rawVacuumError = this.state(vacuumErrorSensor),
+        vacuumError = `vacuum_error.${rawVacuumError}`;
+        
+      isVacuumError = rawVacuumError != "none";
+      if (isVacuumError)
+        vacuum = html`<div>${localize('common.vacuum_error')}: ${localize(vacuumError)}.</div>`;
     }
 
+    let isDocError = false;
     let doc: Template = nothing;
-    if (isdocError) {
-      doc = html`
-        ${localize('common.doc_error')}: ${localize(docError)}.
-      `;
+    if (docErrorSensor) {
+      const rawDocError = this.state(docErrorSensor),
+        docError = `doc_error.${rawDocError}`;
+      
+      isDocError = rawDocError != 'ok';
+      if (isDocError)
+        doc = html`<div>${localize('common.doc_error')}: ${localize(docError)}.</div>`;
     }
 
-    if (!isVacuumError && !isdocError)
+    if (!isVacuumError && !isDocError)
       return nothing;
 
     return html`
@@ -189,38 +198,44 @@ export class RoborockVacuumCard extends LitElement {
     `;
   }
 
-  private renderStats(state: string): Template {
-    const statsList =
-      this.config.stats[state] || this.config.stats.default || [];
+  private renderStats(state: string | undefined): Template {
+    if (state === undefined)
+      return nothing;
+
+    const statsList = this.config.stats[state] || this.config.stats.default || [];
 
     const stats = statsList.map(
       ({ entity, attribute, scale, divide_by, unit, title }) => {
         if (!entity && !attribute)
           return nothing;
 
-        let state = '';
+        let state;
 
         if (entity && attribute) {
           state = this.getAttributeValue(this.hass.states[entity], attribute);
         } else if (attribute) {
           state = this.getAttributeValue(this.hass.states[this.config.entity], attribute);
         } else if (entity) {
-          state = this.hass.states[entity].state;
+          state = this.state(entity);
         } else {
           return nothing;
         }
 
-        const needProcessing = scale != null || divide_by != null;
-        if (needProcessing) {
-          let value = parseFloat(state);
+        if (state === undefined) {
+          state = 'N/A';
+        } else {
+          const needProcessing = scale != null || divide_by != null;
+          if (needProcessing) {
+            let value = parseFloat(state);
 
-          if (divide_by != null && divide_by > 0)
-            value = value / divide_by;
+            if (divide_by != null && divide_by > 0)
+              value = value / divide_by;
 
-          if (scale != null)
-            state = value.toFixed(scale);
-          else
-            state = value.toString();
+            if (scale != null)
+              state = value.toFixed(scale);
+            else
+              state = value.toString();
+          }
         }
 
         return html`
@@ -240,7 +255,7 @@ export class RoborockVacuumCard extends LitElement {
     return html`<div class="stats">${stats}</div>`;
   }
 
-  private renderActions(isCleaning: boolean, state: string) {
+  private renderActions(isCleaning: boolean, state: string  | undefined) {
     if (isCleaning) {
       const pauseResume = state == 'paused'
         ? html`
@@ -389,11 +404,18 @@ export class RoborockVacuumCard extends LitElement {
     return areas;
   }
 
-  private getAttributeValue(entity: HassEntity, attribute: string) {
+  _getExistingSensorId(sensorIds: string[]): string | undefined {
+    for (let sensorId of sensorIds) {
+      if (this.hass.states[sensorId])
+        return sensorId;
+    }
+  }
+
+  private getAttributeValue(entity: HassEntity, attribute: string): string | undefined {
     return entity.attributes[attribute];
   }
 
-  private state(id: string): string {
-    return this.hass.states[id].state;
+  private state(id: string): string | undefined {
+    return this.hass.states[id]?.state;
   }
 }
