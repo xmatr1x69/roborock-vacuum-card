@@ -7,7 +7,7 @@
     "start": "rollup -c --watch",
     "build": "rollup -c"
   },
-  "author": "",
+  "author": "strange_v",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
