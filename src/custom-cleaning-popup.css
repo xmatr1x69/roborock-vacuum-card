@@ -107,45 +107,50 @@
   }
 }
 
-/* CSS For Mobile (Horizontal) */
 @media (max-width: 600px) {
   .popup-card {
     width: 100vw;
-    height: 100vh;
-    max-width: 100%;
-    max-height: 100%;
+    max-height: 100vh;
     border-radius: 0;
     overflow-y: auto;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 
-  .content {
-    flex-direction: column; 
-    overflow: auto; 
-  }
+    .header {
+      padding: 0 12px;
+    }
 
-  .parameters {
-    min-height: auto;
-    min-width: unset; 
-    width: 100%; 
-    max-width: 100%; 
-    padding: 4px 0px 4px;
-    border-bottom: 2px solid var(--divider-color);
-    margin-bottom: 4px;
-  }
+    .content {
+      flex-direction: column;
+      overflow: auto;
+    }
 
-  .areas {
-    font-size: 16px;
-  }
+    .parameters {
+      min-height: auto;
+      min-width: unset;
+      width: 100%;
+      max-width: 100%;
+      padding: 0px 0 8px 0;
+      margin-bottom: 4px;
+      border-bottom: 2px solid var(--divider-color);
 
-  .actions {
-    flex-wrap: wrap; 
-    justify-content: center;
-  }
+      segment-button-group {
+        margin-bottom: 12px;
+      }
+    }
 
-  .actions .clean-button {
-    padding: 8px 24px;
-    width: 100%; 
-    max-width: 300px; 
-  }
+    .areas {
+      font-size: 18px;
+    }
+
+    .actions {
+      flex-wrap: wrap;
+      justify-content: center;
+
+      .clean-button {
+        padding: 8px 24px;
+        width: 100%;
+        max-width: 300px;
+      }
+    }
   }
 }
