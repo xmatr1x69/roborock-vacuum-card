@@ -97,7 +97,9 @@ export class RoborockVacuumCard extends LitElement {
     if (!this.hass || !this.config)
       return nothing;
 
-    this.iconColor = this.hass.themes.darkMode ? '#fff' : '#000';
+    this.iconColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--state-icon-color")
+      .trim();
     this.robot.setHass(this.hass);
 
     const isCleaning = this.state(this.sensor.cleaning) == 'on';
@@ -316,10 +318,10 @@ export class RoborockVacuumCard extends LitElement {
       route = this.robot.getRouteMode();
 
     if (suction != RoborockSuctionMode.Off)
-      icons.push(getSuctionIcon(suction, 24, '#fff'));
+      icons.push(getSuctionIcon(suction, 24, this.iconColor));
     if (mop != RoborockMopMode.Off)
-      icons.push(getMopIcon(mop, 24, '#fff'));
-    icons.push(getRouteIcon(route, 24, '#fff'));
+      icons.push(getMopIcon(mop, 24, this.iconColor));
+    icons.push(getRouteIcon(route, 24, this.iconColor));
 
     const result = icons.map(icon => html`<div class="tip">${icon}</div>`)
 
