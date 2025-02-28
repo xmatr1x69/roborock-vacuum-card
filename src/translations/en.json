@@ -62,7 +62,7 @@
     "cliff_sensor_error": "Cliff sensor error",
     "dock_locator_error": "Dock locator error",
     "fan_error": "Fan error",
-    "filter_blocked": "Dilter blocked",
+    "filter_blocked": "Filter blocked",
     "internal_error": "Internal error",
     "invisible_wall_detected": "Invisible wall detected",
     "lidar_blocked": "Lidar blocked",
