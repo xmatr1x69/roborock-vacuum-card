@@ -1,0 +1,107 @@
+{
+  "status": {
+    "cleaning": "Sprzątanie",
+    "docked": "Zadokowany",
+    "error": "Błąd",
+    "idle": "Bezczynny",
+    "offline": "Offline",
+    "paused": "Wstrzymany",
+    "returning": "Powracanie",
+    "unavailable": "Niedostępny"
+  },
+  "reach_status": {
+    "charger_disconnected": "Ładowarka odłączoma",
+    "charging": "Ładowanie",
+    "cleaning": "Sprzątanie",
+    "emptying_the_bin": "Opróżnianie pojemnika na zanieczyszczenia",
+    "error": "Błąd",
+    "going_to_wash_the_mop": "Przejście do mycia mopa",
+    "idle": "Bezczynny",
+    "paused": "Wstrzymany",
+    "returning_home": "Powrót do stacji",
+    "segment_cleaning": "Sprzątanie segmentu",
+    "unavailable": "Niedostępny",
+    "updating": "Aktualizowanie",
+    "washing_the_mop": "Mycie mopa",
+    "zoned_cleaning": "Strefowe sprzątanie"
+  },
+  "mode": {
+    "vac&mop": "Odk. i Mop.",
+    "mop": "Mopuj",
+    "vac": "Odkurz"
+  },
+  "suction_mode": {
+    "off": "Off",
+    "quiet": "Cichy",
+    "balanced": "Zrównoważony",
+    "turbo": "Turbo",
+    "max": "Max",
+    "max_plus": "Max+"
+  },
+  "mop_mode": {
+    "off": "Off",
+    "mild": "Niski",
+    "moderate": "Średni",
+    "intense": "Wysoki"
+  },
+  "route_mode": {
+    "fast": "Szybko",
+    "standard": "Standard",
+    "deep": "Intensywny",
+    "deep_plus": "Intensywny+"
+  },
+  "error": {
+    "invalid_config": "Nieprawidłowa konfiguracja",
+    "missing_entity": "Specifying entity is required!"
+  },
+  "vacuum_error": {
+    "battery_error": "Błąd baterii",
+    "bumper_stuck": "Zderzak zablokowany",
+    "cannot_cross_carpet": "Nie można przekroczyć dywanu",
+    "charging_error": "Błąd ładowania",
+    "cliff_sensor_error": "Błąd czujnika spadku",
+    "dock_locator_error": "Błąd lokalizatora stacji",
+    "fan_error": "Błąd turbiny",
+    "filter_blocked": "Filtr zablokowany",
+    "internal_error": "Błąd wewnętrzny",
+    "invisible_wall_detected": "Niewidzialna ściana wykryta",
+    "lidar_blocked": "Lidar zablokowany",
+    "low_battery": "Niski poziom baterii",
+    "main_brush_jammed": "Zacięta szczotka główna",
+    "no_dustbin": "Brak pojemnika na zanieczyszczenia",
+    "nogo_zone_detected": "Wykryto strefę zakazu ruchu",
+    "return_to_dock_fail": "Błąd powrotu do stacji",
+    "robot_on_carpet": "Robot na dywanie",
+    "robot_tilted": "Robot przechylony",
+    "robot_trapped": "Robot zablokowany",
+    "side_brush_error": "Błąd bocznej szczotki",
+    "side_brush_jammed": "Boczna szczotka zablokowana",
+    "vertical_bumper_pressed": "Wciśnięty zderzak pionowy",
+    "vibrarise_jammed": "Vibrarise zablokowany",
+    "wall_sensor_dirty": "Zabrudzony czujnik ścienny",
+    "wheels_jammed": "Zablokowane koła",
+    "wheels_suspended": "Koła w powietrzu"
+  },
+  "doc_error": {
+    "cleaning_tank_full_or_blocked": "Zbiornik czystej wody pełny lub zablokowany",
+    "dirty_tank_latch_open": "Zatrzask zbiornika zanieczyszczeń otwarty",
+    "duct_blockage": "Zablokowanie kanału",
+    "no_dustbin": "Brak worka na zanieczyszczenia",
+    "waste_water_tank_full": "Zbiornik z brudną wodą pełen",
+    "water_empty": "Zbiornik czystej wody pusty"
+  },
+  "common": {
+    "custom_cleaning": "Spersonalizowane czyszczenie",
+    "doc_error": "Błąd stacji",
+    "mop_mode": "Stan wody",
+    "route_mode": "Trasa",
+    "suction_mode": "Tryb sprzątania",
+    "vacuum_error": "Błąd odkurzania",
+    "start": "Start",
+    "pause": "Wstrzymaj",
+    "resume": "Wznów",
+    "return_to_base": "Powróć do stacji",
+    "locate": "Zlokalizuj",
+    "stop": "Zatrzymaj"
+  }
+}
