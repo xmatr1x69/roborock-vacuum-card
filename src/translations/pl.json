@@ -88,7 +88,7 @@
     "duct_blockage": "Zablokowanie kanału",
     "no_dustbin": "Brak worka na zanieczyszczenia",
     "waste_water_tank_full": "Zbiornik z brudną wodą pełen",
-    "water_empty": "Brak czystej wody"
+    "water_empty": "Zbiornik czystej wody pusty"
   },
   "common": {
     "custom_cleaning": "Spersonalizowane czyszczenie",
