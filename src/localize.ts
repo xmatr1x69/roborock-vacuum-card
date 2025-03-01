@@ -3,6 +3,7 @@
 
 // Sorted alphabetically
 import * as en from './translations/en.json';
+import * as pl from './translations/pl.json';
 
 type Translations = {
   [key: string]: {
@@ -12,6 +13,7 @@ type Translations = {
 
 const languages: Record<string, Translations> = {
   en,
+  pl,
 };
 
 const DEFAULT_LANG = 'en';
