@@ -1184,9 +1184,9 @@ function(t) {
 }(Dt || (Dt = {})),
 function(t) {
     t.Off = "off",
-    t.Low = "mild",
-    t.Medium = "moderate",
-    t.High = "intense"
+    t.Low = "low",
+    t.Medium = "medium",
+    t.High = "high"
 }(Lt || (Lt = {})),
 function(t) {
     t.Fast = "fast",
