@@ -21,16 +21,16 @@ export default function buildConfig(
   const default_modes = {
     [RoborockCleaningMode.VacAndMop]: {
       suction: RoborockSuctionMode.Balanced,
-      mop: RoborockMopMode.Moderate,
+      mop: RoborockMopMode.Mild,
       route: RoborockRouteMode.Standard,
     },
     [RoborockCleaningMode.Mop]: {
       suction: RoborockSuctionMode.Balanced,
-      mop: RoborockMopMode.Moderate,
-      route: RoborockRouteMode.Deep,
+      mop: RoborockMopMode.Mild,
+      route: RoborockRouteMode.Deep+,
     },
     [RoborockCleaningMode.Vac]: {
-      suction: RoborockSuctionMode.Turbo,
+      suction: RoborockSuctionMode.Balanced,
       mop: RoborockMopMode.Moderate,
       route: RoborockRouteMode.Standard,
     },
@@ -40,7 +40,7 @@ export default function buildConfig(
     entity: config.entity,
     stats: config.stats ?? {},
     areas: config.areas ?? [],
-    default_mode: RoborockCleaningMode.VacAndMop,
+    default_mode: RoborockCleaningMode.Vac,
     default_modes: { ...config.default_modes, ...default_modes }
   };
 }
