@@ -40,7 +40,7 @@ export class CustomCleaningPopup extends LitElement {
   @state()
   private activeSuctionMode: RoborockSuctionMode = RoborockSuctionMode.Turbo;
   @state()
-  private activeMopMode: RoborockMopMode = RoborockMopMode.Mild;
+  private activeMopMode: RoborockMopMode = RoborockMopMode.Low;
   @state()
   private activeRouteMode: RoborockRouteMode = RoborockRouteMode.Standard;
   @state()
