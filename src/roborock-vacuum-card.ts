@@ -172,7 +172,7 @@ export class RoborockVacuumCard extends LitElement {
     if (vacuumErrorSensor) {
       const rawVacuumError = this.state(vacuumErrorSensor),
         vacuumError = `vacuum_error.${rawVacuumError}`;
-        
+
       isVacuumError = rawVacuumError != "none";
       if (isVacuumError)
         vacuum = html`<div>${localize('common.vacuum_error')}: ${localize(vacuumError)}.</div>`;
@@ -183,7 +183,7 @@ export class RoborockVacuumCard extends LitElement {
     if (docErrorSensor) {
       const rawDocError = this.state(docErrorSensor),
         docError = `doc_error.${rawDocError}`;
-      
+
       isDocError = rawDocError != 'ok';
       if (isDocError)
         doc = html`<div>${localize('common.doc_error')}: ${localize(docError)}.</div>`;
@@ -257,7 +257,7 @@ export class RoborockVacuumCard extends LitElement {
     return html`<div class="stats">${stats}</div>`;
   }
 
-  private renderActions(isCleaning: boolean, state: string  | undefined) {
+  private renderActions(isCleaning: boolean, state: string | undefined) {
     if (isCleaning) {
       const pauseResume = state == 'paused'
         ? html`
@@ -270,7 +270,7 @@ export class RoborockVacuumCard extends LitElement {
           <ha-icon icon="hass:pause"></ha-icon>
           ${localize('common.pause')}
         </paper-button>`;
-      
+
       return html`
       ${pauseResume}
       <paper-button @click="${this.handleVacuumAction('stop')}">
@@ -352,17 +352,20 @@ export class RoborockVacuumCard extends LitElement {
   }
 
   private renderBattery(): Template {
-    const entity = this.hass.states[this.config.entity];
-    const data = {
-      battery_level: this.getAttributeValue(entity, 'battery_level'),
-      battery_icon: this.getAttributeValue(entity, 'battery_icon'),
-    };
+    const entity = this.hass.states[this.sensor.battery];
+
+    if (!entity)
+      return html``;
+
+    const n = Number(entity.state);
+    const value = Number.isFinite(n) ? Math.round(n) : entity.state;
+    const unit = entity.attributes.unit_of_measurement || (Number.isFinite(n) ? '%' : '');
 
     return html`
       <div class="tip" @click="${() => this.handleMore(this.sensor.battery)}">
-        <ha-icon icon="${data.battery_icon}"></ha-icon>
-        <span class="icon-title">${data.battery_level}%</span>
-      </div>
+      <state-badge class="battery-badge" .hass=${this.hass} .stateObj=${entity}></state-badge>
+      <span class="icon-title">${value}${unit}</span>
+    </div>
     `;
   }
 
@@ -393,7 +396,7 @@ export class RoborockVacuumCard extends LitElement {
     for (let { area_id, roborock_area_id } of this.config.areas) {
       const area = this.hass.areas[area_id];
       if (!area)
-          continue;
+        continue;
 
       areas.push({
         icon: area.icon,
