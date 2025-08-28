@@ -27,7 +27,7 @@ export default function buildConfig(
     [RoborockCleaningMode.Mop]: {
       suction: RoborockSuctionMode.Balanced,
       mop: RoborockMopMode.Mild,
-      route: RoborockRouteMode.Deep+,
+      route: RoborockRouteMode.Deep,
     },
     [RoborockCleaningMode.Vac]: {
       suction: RoborockSuctionMode.Balanced,
