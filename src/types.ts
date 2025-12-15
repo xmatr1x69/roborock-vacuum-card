@@ -48,9 +48,9 @@ export enum RoborockSuctionMode {
 }
 export enum RoborockMopMode {
   Off = 'off',
-  Low = 'low',
-  Medium = 'medium',
-  High = 'high',
+  Low = 'mild',
+  Medium = 'moderate',
+  High = 'intense',
 }
 export enum RoborockRouteMode {
   Fast = 'fast',
