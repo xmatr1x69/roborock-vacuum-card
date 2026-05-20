@@ -1,6 +1,6 @@
 {
   "name": "roborock",
-  "version": "1.3.5",
+  "version": "1.3.5.1",
   "description": "Home Assistant vacuum card that uses core Roborock integration and supports multi-selecting areas for cleaning.",
   "main": "dist/roborock-vacuum-card.js",
   "scripts": {
