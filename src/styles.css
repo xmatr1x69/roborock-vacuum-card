@@ -6,11 +6,6 @@
   --vc-primary-text-color: var(--primary-text-color);
   --vc-secondary-text-color: var(--secondary-text-color);
   --vc-primary-select-background: color-mix(in srgb, var(--primary-color) 15%, var(--vc-background));
-
-
-  --primary-color: #89B3F8;
-  --light-theme-background: #fff;
-  --dark-theme-background: #1d1d1d;
 }
 
 @keyframes pulse {
@@ -50,14 +45,14 @@ ha-card {
         margin-right: 0;
       }
     }
-  
+
     .modes {
       display: flex;
       margin: 0 auto;
       flex-direction: row;
       justify-content: space-evenly;
     }
-    
+
     .battery-badge {
       height: 24px !important;
       width: 24px !important;

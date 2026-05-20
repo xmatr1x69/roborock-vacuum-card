@@ -58,28 +58,22 @@ export class CustomCleaningPopup extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    
+
     this.cleaningModes = [{
-      text: localize('mode.vac&mop'),
-      value: RoborockCleaningMode.VacAndMop
+      text: localize('mode.vac'),
+      value: RoborockCleaningMode.Vac
     }, {
       text: localize('mode.mop'),
       value: RoborockCleaningMode.Mop
     }, {
-      text: localize('mode.vac'),
-      value: RoborockCleaningMode.Vac
+      text: localize('mode.vac&mop'),
+      value: RoborockCleaningMode.VacAndMop
     }];
 
-    this.activeSuctionMode = this.robot.getSuctionMode();
-    this.activeMopMode = this.robot.getMopMode();
-    this.activeRouteMode = this.robot.getRouteMode();
-    
-    if (this.activeSuctionMode == RoborockSuctionMode.Off)
-      this.activeCleaningMode = RoborockCleaningMode.Mop;
-    else if (this.activeMopMode == RoborockMopMode.Off)
-      this.activeCleaningMode = RoborockCleaningMode.Vac;
-    else
-      this.activeCleaningMode = RoborockCleaningMode.VacAndMop;
+    this.activeCleaningMode = RoborockCleaningMode.Vac;
+    this.activeSuctionMode = RoborockSuctionMode.Balanced;
+    this.activeMopMode = RoborockMopMode.Off;
+    this.activeRouteMode = RoborockRouteMode.Standard;
   }
 
   private onCleaningModeChange(e: StringEvent) {
@@ -261,7 +255,7 @@ export class CustomCleaningPopup extends LitElement {
 
   private fixModesIfNeeded() {
     if (!VacuumRobot.isSupportedSuctionMode(this.activeSuctionMode, this.activeCleaningMode))
-      this.activeSuctionMode = this.activeCleaningMode == RoborockCleaningMode.Mop ? RoborockSuctionMode.Off : RoborockSuctionMode.Turbo;
+      this.activeSuctionMode = this.activeCleaningMode == RoborockCleaningMode.Mop ? RoborockSuctionMode.Off : RoborockSuctionMode.Balanced;
     if (!VacuumRobot.isSupportedMopMode(this.activeMopMode, this.activeCleaningMode))
       this.activeMopMode = this.activeCleaningMode == RoborockCleaningMode.Vac ? RoborockMopMode.Off : RoborockMopMode.Low;
     if (!VacuumRobot.isSupportedRouteMode(this.activeRouteMode, this.activeCleaningMode))
