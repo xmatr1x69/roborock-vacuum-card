@@ -57,24 +57,39 @@ export class CustomCleaningPopup extends LitElement {
   }
 
   connectedCallback() {
-    super.connectedCallback();
+      super.connectedCallback();
 
-    this.cleaningModes = [{
-      text: localize('mode.vac'),
-      value: RoborockCleaningMode.Vac
-    }, {
-      text: localize('mode.mop'),
-      value: RoborockCleaningMode.Mop
-    }, {
-      text: localize('mode.vac&mop'),
-      value: RoborockCleaningMode.VacAndMop
-    }];
+      // 1. Ustawienie kolejności przycisków (Odkurzanie jako pierwsze od lewej)
+      this.cleaningModes = [{
+        text: localize('mode.vac'),
+        value: RoborockCleaningMode.Vac
+      }, {
+        text: localize('mode.mop'),
+        value: RoborockCleaningMode.Mop
+      }, {
+        text: localize('mode.vac&mop'),
+        value: RoborockCleaningMode.VacAndMop
+      }];
 
-    this.activeCleaningMode = RoborockCleaningMode.Vac;
-    this.activeSuctionMode = RoborockSuctionMode.Balanced;
-    this.activeMopMode = RoborockMopMode.Off;
-    this.activeRouteMode = RoborockRouteMode.Standard;
-  }
+      if (this.robot.isCleaning()) {
+        this.activeSuctionMode = this.robot.getSuctionMode();
+        this.activeMopMode = this.robot.getMopMode();
+        this.activeRouteMode = this.robot.getRouteMode();
+
+        if (this.activeSuctionMode == RoborockSuctionMode.Off)
+          this.activeCleaningMode = RoborockCleaningMode.Mop;
+        else if (this.activeMopMode == RoborockMopMode.Off)
+          this.activeCleaningMode = RoborockCleaningMode.Vac;
+        else
+          this.activeCleaningMode = RoborockCleaningMode.VacAndMop;
+
+      } else {
+        this.activeCleaningMode = RoborockCleaningMode.Vac;
+        this.activeSuctionMode = RoborockSuctionMode.Balanced;
+        this.activeMopMode = RoborockMopMode.Off;
+        this.activeRouteMode = RoborockRouteMode.Standard;
+      }
+    }
 
   private onCleaningModeChange(e: StringEvent) {
     const cleaningMode = e.detail as RoborockCleaningMode;;

@@ -47,7 +47,8 @@ export class VacuumRobot {
   }
 
   constructor() {
-    
+
+
   }
 
   public setHass(hass: MyHomeAssistant) {
@@ -70,6 +71,10 @@ export class VacuumRobot {
     return this.state(`select.${this.name}_mop_mode`);
   }
 
+  public isCleaning(): boolean {
+    return this.hass.states[`binary_sensor.${this.name}_cleaning`]?.state === 'on';
+  }
+  
   public callServiceAsync(service: string) {
     return this.hass.callService('vacuum', service, {
       entity_id: this.entity_id,
